@@ -1,17 +1,8 @@
 from setuptools import setup, find_packages
-from setuptools.command.test import test
 
-class TestRunner(test):
-    def run(self, *args, **kwargs):
-        if self.distribution.install_requires:
-            self.distribution.fetch_build_eggs(self.distribution.install_requires)
-        if self.distribution.tests_require:
-            self.distribution.fetch_build_eggs(self.distribution.tests_require)
-        from runtests import runtests
-        runtests()
 setup(
     name='django-object-tools',
-    version='0.0.2',
+    version='0.0.7',
     description='Django app enabling painless creation of additional admin object tools.',
     long_description = open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
     author='Praekelt Foundation',
@@ -19,11 +10,10 @@ setup(
     url='http://github.com/praekelt/django-object-tools',
     packages = find_packages(),
     include_package_data=True,
-    test_suite = "object_tools.tests",
-    cmdclass={"test": TestRunner},
+    test_suite = "setuptest.SetupTestSuite",
     tests_require = [
         'django-snippetscream',
-        'django>=1.3',
+        'django-setuptest>=0.0.6',
     ],
     classifiers = [
         "Programming Language :: Python",
